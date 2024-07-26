@@ -5,7 +5,6 @@ import java.util.ArrayList;
 /**
  * La classe Player rappresenta il giocatore nel gioco.
  */
-
 public class Player {
     /**
      * Aggiunge un oggetto all'inventario del giocatore.
@@ -18,20 +17,14 @@ public class Player {
     private ArrayList<Item> item = new ArrayList<>();
     private Integer coin = 4;
     private static SignorCervoGUI gui;
-
-    /**
-     * Adds an item to the player's inventory and updates the GUI.
-     *
-     * @param item The item to be added.
-     */
     
     public void addItem(Item item) {
-        if (0 > coin - item.getNumber()){
+        if (0 > coin - item.getNum()){
             gui.updateStatusTerminal("Non hai abbastanza monete");
         }else{
-            this.coin = this.coin - item.getNumber();
+            this.coin = this.coin - item.getNum();
             this.item.add(item);
-            String fromattedString = String.format("Hai scelto %s", item.getName());
+            String fromattedString = String.format("Hai comprato %s", item.getName());
             gui.updateStatusTerminal(fromattedString);
         }
         
@@ -43,14 +36,12 @@ public class Player {
      * @param name l'oggetto da verificare
      * @return true se il giocatore possiede l'oggetto, false altrimenti
      */
-    
-    public boolean hasItem(String itemName) {
-        for ( Item item : this.item) {
-            if (item.getName().equals(itemName)) {
-                return true;
-            }
+    public boolean getItem(Item name) {
+        if (this.item.contains(name)){
+            return true;
+        }else{
+            return false;
         }
-        return false;
     }
 
     /**
@@ -58,7 +49,6 @@ public class Player {
      *
      * @return il numero di monete possedute dal giocatore
      */
-    
     public Integer getCoin() {
         return this.coin;
     }

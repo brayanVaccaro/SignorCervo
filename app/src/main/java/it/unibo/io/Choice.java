@@ -1,7 +1,4 @@
 package it.unibo.io;
-/**
- * The 'Choice' class represents the player's choices in the game.
- */
 
 public class Choice {
     

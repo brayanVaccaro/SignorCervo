@@ -1,5 +1,6 @@
 package it.unibo.io;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -10,23 +11,21 @@ import java.util.concurrent.TimeUnit;
  */
 public class Game {
 
-    private static JsonReader j = new JsonReader();
+    private static JsonReader j  = new JsonReader();
     private SignorCervoGUI gui;
     int i = 0; 
     Choice c = new Choice();
     Scanner myObj = new Scanner(System.in);
     Player player = new Player();
     Integer key = 2;
-    int level = 0;
     Map<Integer, String> futureResponss = new HashMap<Integer,String>();
 
     /**
      * Costruttore della classe Game.
      * Inizializza il gioco leggendo i dati dal file JSON.
      */
-    Game(int dialogo){
-        j.readJson(dialogo);
-        level = dialogo;
+    Game(){
+        j.readJson();
     }
 
     /**
@@ -34,10 +33,10 @@ public class Game {
      * Aggiorna l'interfaccia grafica con l'immagine e il dialogo correnti.
      * Stampa le scelte disponibili e gli oggetti nel negozio, se presenti.
      */
-    public boolean output(){
+    public void output(){
 
-        if (this.i == j.getSize()) {
-            return false;
+        if (this.i > j.getSize()) {
+            return;
         }; 
 
         j.updateMembers(i);
@@ -54,58 +53,40 @@ public class Game {
         j.printChoices(i);
 
         if(j.checkShop()) j.printIteam();
-        return true;
+
     }
 
     /**
      * Metodo per gestire l'input dell'utente.
      * Elabora la scelta dell'utente e aggiorna lo stato del gioco di conseguenza.
      *
-     * @param cmd numero della risposta
+     * @param cmd il comando inserito dall'utente
      */
-    public void input(int cmd){
+    public void input(String cmd){
 
         if(j.checkShop()){
 
-            key = cmd;
+            key = c.inputChoiceShop(cmd);
             key = key - 1;
             player.addItem(j.shop(key));
             this.i++;
             return;
         } 
         
-        key = cmd;
+        key = c.inputChoice(cmd);
         key = key - 1;
             
         if(j.checkChoice(i, key)){
 
-
-            j.printReply(key);
+            j.printReply(key);           
             this.i = 0;
             return;
 
         }
 
         j.printReply(key);
-
+        
         this.i++;
     }
-
-    /**
-     *
-     * Controllo delle monete del player con quelle passate.
-     *
-     * @param coin monete
-     */
-    public boolean playerCoin(int coin){
-        if (player.getCoin() >= coin){
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public int getLevel() {
-      return level;
-  }
 }
+

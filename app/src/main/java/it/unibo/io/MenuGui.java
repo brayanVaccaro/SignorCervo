@@ -1,30 +1,27 @@
 package it.unibo.io;
 
+import java.io.IOException;
+
 import it.unibo.io.start.QuizGui;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
-public class MenuMain extends Application {
+public class MenuGui extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("MAIN-MENU");
+        primaryStage.setTitle("MENU");
 
         // Bottone per iniziare a giocare
-        Button startButton = new Button("Gioca a SignorCervo");
+        Button startButton = new Button("Inizia a Giocare");
         startButton.setOnAction(e -> {
             primaryStage.close();
-            menuStart();
-        });
-
-        Button quizButton = new Button("Gioca a QuizTrivia");
-        quizButton.setOnAction(e -> {
-            primaryStage.close();
-            startQuiz();
+            startGame();
         });
 
         // Bottone per uscire dal gioco
@@ -33,9 +30,15 @@ public class MenuMain extends Application {
             System.exit(0);
         });
 
+        Button quizButton = new Button("Avvia Quiz");
+        quizButton.setOnAction(e -> {
+            primaryStage.close();
+            startQuiz();
+        });
+
         // Layout del menu con i bottoni
         VBox menuLayout = new VBox(20);
-        menuLayout.getChildren().addAll(startButton, quizButton, exitButton);
+        menuLayout.getChildren().addAll(startButton,exitButton, quizButton);
         menuLayout.setAlignment(Pos.CENTER);
         menuLayout.setStyle("-fx-background-color: black;");
         // Settiamo la scena del menu
@@ -55,16 +58,20 @@ public class MenuMain extends Application {
         } catch (Exception e) {
             e.printStackTrace();
         }
-    } 
+    }  
 
-    private void menuStart() {
-      MenuSignorCervo menuSG = new MenuSignorCervo();
-      Stage levelStage = new Stage();
-      try {
-          menuSG.start(levelStage);
-      } catch (Exception e) {
-          e.printStackTrace();
-      }
-  }
+    /**
+     * Inizia il gioco con una nuova istanza di SignorCervoGUI
+     */
+    private void startGame() {
+        SignorCervoGUI gameCervoGUI = new SignorCervoGUI();
+        Stage gameStage = new Stage();
+        try {
+            gameCervoGUI.start(gameStage);
+        } catch (InterruptedException | IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
 
 }

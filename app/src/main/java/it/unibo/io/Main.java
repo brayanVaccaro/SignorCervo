@@ -1,15 +1,12 @@
 package it.unibo.io;
 
 import java.io.IOException;
-import javafx.application.Application;
 
-/**
- * The `Main` class is the entry point for the Signor Cervo game.
- */
+import javafx.application.Application;
 
 public class Main {
 
-    static MenuMain gui = new MenuMain();
+    static MenuGui gui = new MenuGui();
     
     /**
     * Metodo principale per avviare l'applicazione.
@@ -18,6 +15,6 @@ public class Main {
      @throws IOException Se si verifica un errore di input/output.
     */
     public static void main(String[] args) throws InterruptedException, IOException {
-        Application.launch(MenuMain.class, args);
+        Application.launch(MenuGui.class, args);
     }
 }
